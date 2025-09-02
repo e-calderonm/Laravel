@@ -14,7 +14,6 @@ class crud extends Model
 
     // Nombre real de la tabla en la BD
     protected $table = 'usuarios';
-
     // Definir clave primaria
     protected $primaryKey = 'codigo';
 

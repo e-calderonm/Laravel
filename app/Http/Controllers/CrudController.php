@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CrudController extends Controller
 {
-    // ============== API (JSON) ================
+    // ================= API (JSON) =================
 
     // Muestra todos los registros de usuarios
     public function index()
@@ -29,62 +29,66 @@ class CrudController extends Controller
         $usuario = crud::findOrFail($codigo);
         return response()->json($usuario);
     }
-// Actualiza un registro
-public function update(Request $request, $codigo)
-{
-    $usuario = crud::findOrFail($codigo);
-    $usuario->update($request->all());
-    return response()->json($usuario);
-}
 
-// Elimina un registro
-public function destroy($codigo)
-{
-    $usuario = crud::findOrFail($codigo);
-    $usuario->delete();
-    return response()->json(null, 204);
-}
+    // Actualiza un registro
+    public function update(Request $request, $codigo)
+    {
+        $usuario = crud::findOrFail($codigo);
+        $usuario->update($request->all());
+        return response()->json($usuario);
+    }
 
-// Muestra la vista con todos los usuarios
-public function vistaIndex()
-{
-    $usuarios = Crud::all();
-    return view('cruds.index', compact('usuarios'));
-}
+    // Elimina un registro
+    public function destroy($codigo)
+    {
+        $usuario = crud::findOrFail($codigo);
+        $usuario->delete();
+        return response()->json(null, 204);
+    }
 
-// Muestra el formulario de creación
-public function create()
-{
-    return view('cruds.create');
-}
 
-// Guarda el usuario desde el formulario web
-public function storeWeb(Request $request)
-{
-    Crud::create($request->all());
-    return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente');
-}
+    // ================= VISTAS (Blade) =================
 
-// Muestra el formulario de edición
-public function edit($codigo)
-{
-    $usuario = Crud::findOrFail($codigo);
-    return view('cruds.edit', compact('usuario'));
-}
+    // Muestra la vista con todos los usuarios
+    public function vistaIndex()
+    {
+        $usuarios = Crud::all();
+        return view('cruds.index', compact('usuarios'));
+    }
 
-// Actualiza el usuario desde el formulario web
-public function updateWeb(Request $request, $codigo)
-{
-    $usuario = Crud::findOrFail($codigo);
-    $usuario->update($request->all());
-    return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente');
-}
+    // Muestra el formulario de creación
+    public function create()
+    {
+        return view('cruds.create');
+    }
 
-// Elimina el usuario desde la vista web
-public function destroyWeb($codigo)
-{
-    $usuario = Crud::findOrFail($codigo);
-    $usuario->delete();
-    return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
-}
+    // Guarda el usuario desde el formulario web
+    public function storeWeb(Request $request)
+    {
+        Crud::create($request->all());
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente');
+    }
+
+    // Muestra el formulario de edición
+    public function edit($codigo)
+    {
+        $usuario = Crud::findOrFail($codigo);
+        return view('cruds.edit', compact('usuario'));
+    }
+
+    // Actualiza el usuario desde el formulario web
+    public function updateWeb(Request $request, $codigo)
+    {
+        $usuario = Crud::findOrFail($codigo);
+        $usuario->update($request->all());
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente');
+    }
+
+    // Elimina el usuario desde la vista web
+    public function destroyWeb($codigo)
+    {
+        $usuario = Crud::findOrFail($codigo);
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
+    }
 }
